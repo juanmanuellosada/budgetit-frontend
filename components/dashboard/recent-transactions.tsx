@@ -85,7 +85,7 @@ export function RecentTransactions() {
                 >
                   {transaction.amount.toLocaleString("es-ES", {
                     style: "currency",
-                    currency: "EUR",
+                    currency: "ARS",
                   })}
                 </TableCell>
               </TableRow>

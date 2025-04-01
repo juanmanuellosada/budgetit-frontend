@@ -55,12 +55,12 @@ export function BudgetOverview() {
                 <span className="text-sm text-muted-foreground">
                   {budget.current.toLocaleString("es-ES", {
                     style: "currency",
-                    currency: "EUR",
+                    currency: "ARS",
                   })}{" "}
                   /{" "}
                   {budget.max.toLocaleString("es-ES", {
                     style: "currency",
-                    currency: "EUR",
+                    currency: "ARS",
                   })}
                 </span>
               </div>

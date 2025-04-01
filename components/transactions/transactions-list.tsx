@@ -513,7 +513,7 @@ export function TransactionsList() {
                             >
                               {transaction.amount.toLocaleString("es-ES", {
                                 style: "currency",
-                                currency: "EUR",
+                                currency: "ARS",
                               })}
                             </span>
                           </div>

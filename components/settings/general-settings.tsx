@@ -37,7 +37,7 @@ export function GeneralSettings() {
       name: "Usuario",
       email: "usuario@ejemplo.com",
       language: currentLanguage,
-      currency: "EUR",
+      currency: "ARS",
       dateFormat: "DD/MM/YYYY",
     },
   })
@@ -127,9 +127,8 @@ export function GeneralSettings() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="EUR">EUR - Euro</SelectItem>
+                      <SelectItem value="ARS">ARS - Peso argentino</SelectItem>
                       <SelectItem value="USD">USD - Dólar</SelectItem>
-                      <SelectItem value="GBP">GBP - Libra Esterlina</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormDescription>{t("currencyDescription")}</FormDescription>

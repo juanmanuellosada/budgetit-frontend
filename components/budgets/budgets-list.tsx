@@ -20,7 +20,7 @@ const budgets = [
     current: 450,
     max: 600,
     percentage: 75,
-    currency: "EUR",
+    currency: "ARS",
     period: "Mensual",
   },
   {
@@ -29,7 +29,7 @@ const budgets = [
     current: 180,
     max: 200,
     percentage: 90,
-    currency: "EUR",
+    currency: "ARS",
     period: "Mensual",
   },
   {
@@ -38,7 +38,7 @@ const budgets = [
     current: 120,
     max: 150,
     percentage: 80,
-    currency: "EUR",
+    currency: "ARS",
     period: "Mensual",
   },
   {
@@ -47,7 +47,7 @@ const budgets = [
     current: 210,
     max: 250,
     percentage: 84,
-    currency: "EUR",
+    currency: "ARS",
     period: "Mensual",
   },
   {
@@ -56,7 +56,7 @@ const budgets = [
     current: 50,
     max: 200,
     percentage: 25,
-    currency: "EUR",
+    currency: "ARS",
     period: "Mensual",
   },
 ]

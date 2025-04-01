@@ -68,7 +68,7 @@ export function AccountBalanceChart() {
               <XAxis dataKey="date" />
               <YAxis />
               <Tooltip
-                formatter={(value) => [value.toLocaleString("es-ES", { style: "currency", currency: "EUR" }), ""]}
+                formatter={(value) => [value.toLocaleString("es-ES", { style: "currency", currency: "ARS" }), ""]}
               />
               <Legend />
               {(account === "all" || account === "checking") && (

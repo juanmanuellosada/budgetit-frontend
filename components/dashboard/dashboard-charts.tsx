@@ -7,26 +7,26 @@ import { cn } from "@/lib/utils"
 import { ChartManager } from "@/components/charts/chart-manager"
 import dynamic from "next/dynamic"
 
-// Importar los componentes de gráficos dinámicamente para evitar problemas de SSR
+// Importar los componentes de gráficos directamente
 const ExpenseCategoryChart = dynamic(
-  () => import("@/components/charts/expense-category-chart").then((mod) => mod.ExpenseCategoryChart),
-  { ssr: false },
+  () => import("@/components/charts/expense-category-chart").then(mod => mod.ExpensePieChart),
+  { ssr: false }
 )
 const IncomeExpenseChart = dynamic(
-  () => import("@/components/charts/income-expense-chart").then((mod) => mod.IncomeExpenseChart),
-  { ssr: false },
+  () => import("@/components/charts/income-expense-chart").then(mod => mod.IncomeExpenseChart),
+  { ssr: false }
 )
 const SavingsTrendChart = dynamic(
-  () => import("@/components/charts/savings-trend-chart").then((mod) => mod.SavingsTrendChart),
-  { ssr: false },
+  () => import("@/components/charts/savings-trend-chart").then(mod => mod.SavingsTrendChart),
+  { ssr: false }
 )
 const BudgetProgressChart = dynamic(
-  () => import("@/components/charts/budget-progress-chart").then((mod) => mod.BudgetProgressChart),
-  { ssr: false },
+  () => import("@/components/charts/budget-progress-chart").then(mod => mod.BudgetProgressChart),
+  { ssr: false }
 )
 const AccountBalanceChart = dynamic(
-  () => import("@/components/charts/account-balance-chart").then((mod) => mod.AccountBalanceChart),
-  { ssr: false },
+  () => import("@/components/charts/account-balance-chart").then(mod => mod.AccountBalanceChart),
+  { ssr: false }
 )
 
 interface DashboardChartsProps {
@@ -46,6 +46,15 @@ export function DashboardCharts({ expandedSection, className }: DashboardChartsP
     { id: "savingsTrend", name: t("savingsTrend"), component: SavingsTrendChart, category: "savings" },
     { id: "budgetProgress", name: t("budgetProgress"), component: BudgetProgressChart, category: "budget" },
     { id: "accountBalance", name: t("accountBalances"), component: AccountBalanceChart, category: "account" },
+  ]
+    
+  const expenseCategoryData = [
+    { name: "Alimentación", value: 450, color: "#FF6384" },
+    { name: "Transporte", value: 180, color: "#36A2EB" },
+    { name: "Vivienda", value: 850, color: "#FFCE56" },
+    { name: "Ocio", value: 120, color: "#4BC0C0" },
+    { name: "Salud", value: 50, color: "#9966FF" },
+    { name: "Servicios", value: 210, color: "#FF9F40" },
   ]
 
   // Marcar cuando el componente está montado para evitar problemas de hidratación
@@ -128,7 +137,7 @@ export function DashboardCharts({ expandedSection, className }: DashboardChartsP
 
           return (
             <div key={chart.id} className="col-span-1">
-              <ChartComponent />
+                <ChartComponent data={expenseCategoryData} currencyCode="ARS" />
             </div>
           )
         })}

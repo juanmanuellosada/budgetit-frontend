@@ -167,7 +167,7 @@ export function OperationsSummary() {
                         <span className={`font-medium ${transaction.amount > 0 ? "text-green-600" : "text-red-600"}`}>
                           {transaction.amount.toLocaleString("es-ES", {
                             style: "currency",
-                            currency: "EUR",
+                            currency: "ARS",
                           })}
                         </span>
                       </div>

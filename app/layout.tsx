@@ -10,23 +10,25 @@ import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#1E40AF",
+}
+
 export const metadata = {
   title: "BudgeIt - Gestión Financiera Personal",
   description: "Aplicación modular para gestión financiera personal",
   manifest: "/manifest.json",
-  themeColor: "#1E40AF",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "BudgeIt",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -37,17 +39,17 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <LanguageProvider>
-            <div className="flex min-h-screen flex-col">
+            <div className="flex flex-col min-h-screen overflow-hidden">
               <Navbar />
               <div className="flex flex-1">
-                <Sidebar />
                 <main className="flex-1 p-4 md:p-6 overflow-x-hidden">
                   {children}
                   <PwaInstallPrompt />

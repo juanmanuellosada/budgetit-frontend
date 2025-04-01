@@ -71,7 +71,7 @@ export function BudgetProgressChart() {
               <XAxis type="number" />
               <YAxis type="category" dataKey="name" width={100} />
               <Tooltip
-                formatter={(value) => [value.toLocaleString("es-ES", { style: "currency", currency: "EUR" }), ""]}
+                formatter={(value) => [value.toLocaleString("es-ES", { style: "currency", currency: "ARS" }), ""]}
               />
               <Legend />
               <Bar dataKey="current" name={t("currentSpending")} fill="#3b82f6" />

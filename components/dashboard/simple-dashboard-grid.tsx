@@ -91,15 +91,6 @@ export function SimpleDashboardGrid({ children, titles }: SimpleDashboardGridPro
     setHiddenWidgets((prev) => (prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]))
   }
 
-  // Resetear layout
-  const resetLayout = () => {
-    setHiddenWidgets([])
-    setExpandedWidget(null)
-    setExpandedSection(null)
-    localStorage.removeItem("dashboardHiddenWidgets")
-    localStorage.removeItem("dashboardLayout")
-  }
-
   // Si hay un widget expandido, mostrarlo a pantalla completa
   if (expandedWidget !== null) {
     return (
@@ -128,12 +119,6 @@ export function SimpleDashboardGrid({ children, titles }: SimpleDashboardGridPro
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end gap-2">
-        <Button variant="outline" size="sm" onClick={resetLayout}>
-          {t("resetLayout")}
-        </Button>
-      </div>
-
       <div className="space-y-4">
         {/* Primero renderizamos el widget de resumen (DashboardSummary) */}
         {!hiddenWidgets.includes(0) && (

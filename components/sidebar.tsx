@@ -38,37 +38,15 @@ export function Sidebar() {
     localStorage.setItem("sidebarCollapsed", String(newState))
   }
 
+  // Ahora solo incluye ítems adicionales que no están en la barra superior
+  // o puedes dejarla completamente vacía o con solo algunos elementos útiles
   const sidebarItems = [
     {
-      name: t("dashboard"),
-      href: "/",
-      icon: LayoutDashboard,
+      name: t("help"),
+      href: "/ayuda",
+      icon: HelpCircle,
     },
-    {
-      name: t("accounts"),
-      href: "/cuentas",
-      icon: Wallet,
-    },
-    {
-      name: t("cards"),
-      href: "/tarjetas",
-      icon: CreditCard,
-    },
-    {
-      name: t("transactions"),
-      href: "/transacciones",
-      icon: ArrowLeftRight,
-    },
-    {
-      name: t("budgets"),
-      href: "/presupuestos",
-      icon: PieChart,
-    },
-    {
-      name: t("settings"),
-      href: "/configuracion",
-      icon: Settings,
-    },
+    // Puedes añadir otros elementos específicos aquí si es necesario
   ]
 
   return (
@@ -91,26 +69,25 @@ export function Sidebar() {
                 )}
               >
                 <item.icon className="h-4 w-4" />
-                {!collapsed && <span>{item.name}</span>}
+                <span className={collapsed ? "hidden" : ""}>{item.name}</span>
               </Link>
             ))}
           </nav>
         </div>
-        <div className="mt-auto">
-          <Button variant="outline" className={cn("w-full justify-start", collapsed && "justify-center")}>
-            <HelpCircle className="h-4 w-4 mr-2" />
-            {!collapsed && <span>{t("support")}</span>}
-          </Button>
-        </div>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="mt-auto mb-4"
+          onClick={toggleSidebar}
+        >
+          {collapsed ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
+        </Button>
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute -right-3 top-6 h-6 w-6 rounded-full border bg-background shadow-sm"
-        onClick={toggleSidebar}
-      >
-        {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
-      </Button>
     </div>
   )
 }

@@ -36,7 +36,7 @@ export default function Home() {
   const [isClient, setIsClient] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FilterState>({
     selectedCategories: [],
     selectedAccounts: [],
     dateRange: { from: undefined, to: undefined },
@@ -84,25 +84,37 @@ export default function Home() {
     <BudgetOverview key="budgets" />,
   ]
 
-  const categories = Array.from(new Set(transactions.map((t) => t.category)))
-  const accounts = Array.from(new Set(transactions.map((t) => t.account)))
+// Define interfaces
+interface Transaction {
+    id: number;
+    category: string;
+    account: string;
+}
 
-  // Memoizamos la función para evitar recreaciones innecesarias
-  const handleFilterChange = useCallback((newFilters) => {
+interface FilterState {
+    selectedCategories: string[];
+    selectedAccounts: string[];
+    dateRange: {
+        from: Date | undefined;
+        to: Date | undefined;
+    };
+}
+
+const categories: string[] = Array.from(new Set(transactions.map((t: Transaction) => t.category)))
+const accounts: string[] = Array.from(new Set(transactions.map((t: Transaction) => t.account)))
+
+// Memoizamos la función para evitar recreaciones innecesarias
+const handleFilterChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters)
     console.log("Filters changed:", newFilters)
-  }, [])
+}, [])
 
-  const resetLayout = () => {
-    console.log("Reset layout")
-  }
-
-  // Si no estamos en el cliente, mostrar un estado de carga
-  if (!isClient) {
+// Si no estamos en el cliente, mostrar un estado de carga
+if (!isClient) {
     return (
-      <div className="flex flex-col gap-6">
-        <DashboardHeader />
-        <div>Cargando dashboard...</div>
+        <div className="flex flex-col gap-6">
+            <DashboardHeader />
+            <div>Cargando dashboard...</div>
       </div>
     )
   }
@@ -148,10 +160,6 @@ export default function Home() {
               />
             </PopoverContent>
           </Popover>
-
-          <Button variant="outline" size="sm" onClick={resetLayout}>
-            {t("resetLayout")}
-          </Button>
         </div>
       </div>
 

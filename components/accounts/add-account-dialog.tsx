@@ -30,7 +30,7 @@ const formSchema = z.object({
     .string()
     .min(1, { message: "El saldo inicial es requerido" })
     .refine((val) => !isNaN(Number.parseFloat(val)), { message: "Debe ser un número válido" }),
-  currency: z.string().default("EUR"),
+  currency: z.string().default("ARS"),
   icon: z.string().optional(),
 })
 
@@ -45,7 +45,7 @@ export function AddAccountDialog({ open, onOpenChange }: AddAccountDialogProps) 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      currency: "EUR",
+      currency: "ARS",
       icon: "Landmark",
     },
   })
@@ -132,7 +132,7 @@ export function AddAccountDialog({ open, onOpenChange }: AddAccountDialogProps) 
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="EUR">EUR - Euro</SelectItem>
+                        <SelectItem value="ARS">ARS - Peso argentino</SelectItem>
                         <SelectItem value="USD">USD - Dólar</SelectItem>
                       </SelectContent>
                     </Select>

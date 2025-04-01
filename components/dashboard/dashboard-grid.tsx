@@ -9,6 +9,7 @@ import { useLanguage } from "@/contexts/language-context"
 import { cn } from "@/lib/utils"
 import { Maximize2, Minimize2, X } from "lucide-react"
 
+
 // Importamos dinámicamente react-grid-layout para evitar problemas con SSR
 import dynamic from "next/dynamic"
 
@@ -68,96 +69,140 @@ export function DashboardGrid({ children, titles, defaultLayouts }: DashboardGri
   }, [children])
 
   // Generar layouts por defecto si no se proporcionan
-  useEffect(() => {
-    if (!defaultLayouts && mounted) {
-      const generatedLayouts: { [key: string]: Layout[] } = {
-        lg: [],
-        md: [],
-        sm: [],
-        xs: [],
-      }
+// Generar layouts por defecto si no se proporcionan
+useEffect(() => {
+  if (!defaultLayouts && mounted) {
+    const generatedLayouts: { lg: Layout[]; md: Layout[]; sm: Layout[]; xs: Layout[] } = {
+      lg: [],
+      md: [],
+      sm: [],
+      xs: [],
+    }
 
-      // Layout para pantallas grandes (lg)
-      children.forEach((_, i) => {
-        // El widget de Resumen de Operaciones ocupa todo el ancho
-        if (titles[i] === t("operationsSummary")) {
-          generatedLayouts.lg.push({
-            i: i.toString(),
-            x: 0,
-            y: 4,
-            w: 12,
-            h: 8,
-            minW: 6,
-            minH: 4,
-          })
-        } else {
-          // Otros widgets se distribuyen en una cuadrícula
-          generatedLayouts.lg.push({
-            i: i.toString(),
-            x: (i % 4) * 3,
-            y: Math.floor(i / 4) * 4,
-            w: 3,
-            h: 4,
-            minW: 2,
-            minH: 2,
-          })
-        }
-      })
+    // Determinar qué índice tiene el Resumen de Operaciones
+    const operationsSummaryIndex = titles.findIndex((title) => title === t("operationsSummary"))
 
-      // Layout para pantallas medianas (md)
-      children.forEach((_, i) => {
-        if (titles[i] === t("operationsSummary")) {
-          generatedLayouts.md.push({
-            i: i.toString(),
-            x: 0,
-            y: 4,
-            w: 8,
-            h: 8,
-            minW: 4,
-            minH: 4,
-          })
-        } else {
-          generatedLayouts.md.push({
-            i: i.toString(),
-            x: (i % 2) * 4,
-            y: Math.floor(i / 2) * 4,
-            w: 4,
-            h: 4,
-            minW: 2,
-            minH: 2,
-          })
-        }
-      })
-
-      // Layout para pantallas pequeñas (sm)
-      children.forEach((_, i) => {
-        generatedLayouts.sm.push({
-          i: i.toString(),
-          x: 0,
-          y: i * 4,
-          w: 6,
-          h: 4,
-          minW: 2,
-          minH: 2,
+    // Layout para pantallas grandes (lg)
+    children.forEach((_, i) => {
+    // El widget de Resumen de Operaciones ocupa todo el ancho y se ubica al inicio
+    if (titles[i] === t("operationsSummary")) {
+        generatedLayouts.lg.push({
+        i: i.toString(),
+        x: 0, // Mantener a la izquierda
+        y: 0, // Al inicio
+        w: 12, // Ocupa todo el ancho
+        h: 8,
+        minW: 6,
+        minH: 4,
         })
-      })
+    } else if (titles[i] === t("expensesByCategory") || titles[i] === t("incomeVsExpenses")) {
+        // Dar más espacio a los gráficos
+        const adjustedIndex = i > operationsSummaryIndex ? i - 1 : i;
+        const column = adjustedIndex % 2; // Solo 2 columnas para gráficos
+        generatedLayouts.lg.push({
+        i: i.toString(),
+        x: column * 6, // 6 unidades de ancho cada uno (2 columnas)
+        y: Math.floor(adjustedIndex / 2) * 6 + (operationsSummaryIndex !== -1 ? 8 : 0),
+        w: 6, // Más ancho para gráficos
+        h: 6, // Más alto para gráficos
+        minW: 4,
+        minH: 4,
+        })
+    } else {
+        // Widgets normales
+        const adjustedIndex = i > operationsSummaryIndex ? i - 1 : i;
+        generatedLayouts.lg.push({
+        i: i.toString(),
+        x: (adjustedIndex % 4) * 3,
+        y: Math.floor(adjustedIndex / 4) * 4 + (operationsSummaryIndex !== -1 ? 14 : 0), // Más abajo, después de gráficos
+        w: 3,
+        h: 4,
+        minW: 2,
+        minH: 2,
+        })
+    }
+    })
 
-      // Layout para pantallas muy pequeñas (xs)
-      children.forEach((_, i) => {
-        generatedLayouts.xs.push({
+    // Layout para pantallas medianas (md)
+    children.forEach((_, i) => {
+      if (titles[i] === t("operationsSummary")) {
+        generatedLayouts.md.push({
           i: i.toString(),
           x: 0,
-          y: i * 4,
+          y: 0, // Se coloca al principio
+          w: 8,
+          h: 8,
+          minW: 4,
+          minH: 4,
+        })
+      } else {
+        const adjustedIndex = i > operationsSummaryIndex ? i - 1 : i;
+        generatedLayouts.md.push({
+          i: i.toString(),
+          x: (adjustedIndex % 2) * 4,
+          y: Math.floor(adjustedIndex / 2) * 4 + (operationsSummaryIndex !== -1 ? 8 : 0),
           w: 4,
           h: 4,
           minW: 2,
           minH: 2,
         })
-      })
+      }
+    })
 
-      setLayouts(generatedLayouts)
-    }
-  }, [children, defaultLayouts, t, mounted])
+    // Layout para pantallas pequeñas (sm)
+    children.forEach((_, i) => {
+      // Para pantallas pequeñas, primero mostramos el resumen de operaciones
+      if (titles[i] === t("operationsSummary")) {
+        generatedLayouts.sm.push({
+          i: i.toString(),
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6, // Hacerlo un poco más alto
+          minW: 2,
+          minH: 2,
+        })
+      } else {
+        generatedLayouts.sm.push({
+          i: i.toString(),
+          x: 0,
+          y: (i > operationsSummaryIndex ? i - 1 : i) * 4 + (operationsSummaryIndex !== -1 ? 6 : 0),
+          w: 6,
+          h: 4,
+          minW: 2,
+          minH: 2,
+        })
+      }
+    })
+
+    // Layout para pantallas muy pequeñas (xs)
+    children.forEach((_, i) => {
+      if (titles[i] === t("operationsSummary")) {
+        generatedLayouts.xs.push({
+          i: i.toString(),
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 6,
+          minW: 2,
+          minH: 2,
+        })
+      } else {
+        generatedLayouts.xs.push({
+          i: i.toString(),
+          x: 0,
+          y: (i > operationsSummaryIndex ? i - 1 : i) * 4 + (operationsSummaryIndex !== -1 ? 6 : 0),
+          w: 4,
+          h: 4,
+          minW: 2,
+          minH: 2,
+        })
+      }
+    })
+
+    setLayouts(generatedLayouts)
+  }
+}, [children, defaultLayouts, t, mounted])
 
   // Necesario para evitar errores de hidratación con SSR
   useEffect(() => {
@@ -187,7 +232,12 @@ export function DashboardGrid({ children, titles, defaultLayouts }: DashboardGri
 
   // Manejar cambios en el layout
   const handleLayoutChange = (currentLayout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
-    setLayouts(allLayouts)
+    setLayouts({
+      lg: allLayouts.lg || [],
+      md: allLayouts.md || [],
+      sm: allLayouts.sm || [],
+      xs: allLayouts.xs || []
+    })
   }
 
   // Expandir/contraer widget
@@ -201,28 +251,6 @@ export function DashboardGrid({ children, titles, defaultLayouts }: DashboardGri
       ...prev,
       [index]: { ...prev[index], visible: !prev[index]?.visible },
     }))
-  }
-
-  // Resetear layout a valores por defecto
-  const resetLayout = () => {
-    localStorage.removeItem("dashboardLayouts")
-    setLayouts(
-      defaultLayouts || {
-        lg: [],
-        md: [],
-        sm: [],
-        xs: [],
-      },
-    )
-
-    // Restablecer visibilidad de todos los widgets
-    const resetWidgetSettings: { [key: string]: { visible: boolean } } = {}
-    children.forEach((_, index) => {
-      resetWidgetSettings[index.toString()] = { visible: true }
-    })
-    setWidgetSettings(resetWidgetSettings)
-
-    setExpandedWidget(null)
   }
 
   if (!mounted) return <div>Cargando dashboard...</div>
@@ -271,59 +299,64 @@ export function DashboardGrid({ children, titles, defaultLayouts }: DashboardGri
     )
   }
 
-  return (
-    <div className="relative">
-      <div className="flex justify-end mb-4 gap-2">
-        <Button variant="outline" size="sm" onClick={resetLayout}>
-          {t("resetLayout")}
+return (
+<div className="relative flex flex-col gap-4">
+    {/* Tabs para selección de widgets */}
+    <div className="flex flex-wrap gap-2 bg-muted/20 p-2 rounded-lg overflow-x-auto">
+    {titles.map((title, idx) => (
+        <Button
+        key={idx}
+        variant={widgetSettings[idx.toString()]?.visible ? "default" : "outline"}
+        size="sm"
+        className="text-xs"
+        onClick={() => toggleWidgetVisibility(idx.toString())}
+        >
+        {title}
         </Button>
-      </div>
-
-      <ResponsiveGridLayout
-        className="layout"
-        layouts={layouts}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
-        cols={{ lg: 12, md: 8, sm: 6, xs: 4 }}
-        rowHeight={60}
-        onLayoutChange={handleLayoutChange}
-        isDraggable={true}
-        isResizable={true}
-        margin={[16, 16]}
-      >
-        {children.map((child, index) => {
-          // No renderizar widgets ocultos
-          if (!widgetSettings[index.toString()]?.visible) {
-            return null
-          }
-
-          return (
-            <div key={index.toString()} className="relative">
-              <Card className="w-full h-full overflow-hidden">
-                <CardHeader className="flex flex-row items-center justify-between p-3">
-                  <CardTitle className="text-base">{titles[index]}</CardTitle>
-                  <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => toggleWidgetExpansion(index)}>
-                      <Maximize2 className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => toggleWidgetVisibility(index.toString())}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent
-                  className={cn(
-                    "p-3 overflow-auto",
-                    titles[index] === t("operationsSummary") ? "h-[calc(100%-3rem)]" : "",
-                  )}
-                >
-                  {child}
-                </CardContent>
-              </Card>
-            </div>
-          )
-        })}
-      </ResponsiveGridLayout>
+    ))}
     </div>
-  )
+
+    <ResponsiveGridLayout
+    className="layout"
+    layouts={layouts}
+    breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+    cols={{ lg: 12, md: 12, sm: 6, xs: 4 }} // Actualiza las columnas para md
+    rowHeight={60}
+    onLayoutChange={handleLayoutChange}
+    isDraggable={true}
+    isResizable={true}
+    margin={[16, 16]}
+    >
+    {children.map((child, index) => {
+        // No renderizar widgets ocultos
+        if (!widgetSettings[index.toString()]?.visible) {
+        return null
+        }
+
+        return (
+        <div key={index.toString()} className="relative">
+            <Card className="w-full h-full overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between p-3">
+                <CardTitle className="text-base">{titles[index]}</CardTitle>
+                <Button variant="ghost" size="icon" onClick={() => toggleWidgetExpansion(index)}>
+                <Maximize2 className="h-4 w-4" />
+                </Button>
+            </CardHeader>
+            <CardContent
+                className={cn(
+                "p-3 overflow-auto",
+                titles[index] === t("operationsSummary") ? "h-[calc(100%-3rem)]" : "",
+                (titles[index] === t("expensesByCategory") || titles[index] === t("incomeVsExpenses")) ? "h-[350px]" : ""
+                )}
+            >
+                {child}
+            </CardContent>
+            </Card>
+        </div>
+        )
+    })}
+    </ResponsiveGridLayout>
+</div>
+)
 }
 

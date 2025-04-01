@@ -23,7 +23,7 @@ const bankAccounts = [
     name: "Cuenta Corriente",
     type: "Corriente",
     balance: 3250.75,
-    currency: "EUR",
+    currency: "ARS",
     lastUpdate: "2025-03-07",
   },
   {
@@ -31,7 +31,7 @@ const bankAccounts = [
     name: "Cuenta de Ahorros",
     type: "Ahorros",
     balance: 7411.28,
-    currency: "EUR",
+    currency: "ARS",
     lastUpdate: "2025-03-07",
   },
   {
@@ -39,7 +39,7 @@ const bankAccounts = [
     name: "Cuenta USD",
     type: "Corriente",
     balance: 1000.0,
-    currency: "USD",
+    currency: "ARS",
     lastUpdate: "2025-03-06",
   },
 ]
@@ -51,7 +51,7 @@ const creditCards = [
     bank: "Banco Principal",
     balance: -1891.56,
     limit: 3000.0,
-    currency: "EUR",
+    currency: "ARS",
     dueDate: "2025-03-15",
   },
   {
@@ -60,7 +60,7 @@ const creditCards = [
     bank: "Banco Secundario",
     balance: -1000.0,
     limit: 2000.0,
-    currency: "EUR",
+    currency: "ARS",
     dueDate: "2025-03-20",
   },
 ]

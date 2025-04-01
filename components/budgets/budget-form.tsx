@@ -24,7 +24,7 @@ const formSchema = z.object({
     .refine((val) => !isNaN(Number.parseFloat(val)), { message: "Debe ser un número válido" })
     .refine((val) => Number.parseFloat(val) > 0, { message: "El monto debe ser mayor que cero" }),
   period: z.enum(["monthly", "yearly"]),
-  currency: z.string().default("EUR"),
+  currency: z.string().default("ARS"),
 })
 
 interface BudgetFormProps {
@@ -38,7 +38,7 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       period: "monthly",
-      currency: "EUR",
+      currency: "ARS",
       icon: "CircleDollarSign",
     },
   })
@@ -151,7 +151,7 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="EUR">EUR - Euro</SelectItem>
+                      <SelectItem value="ARS">ARS - Peso argentino</SelectItem>
                       <SelectItem value="USD">USD - Dólar</SelectItem>
                     </SelectContent>
                   </Select>

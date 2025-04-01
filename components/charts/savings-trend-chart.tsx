@@ -60,7 +60,7 @@ export function SavingsTrendChart() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip
-                formatter={(value) => [value.toLocaleString("es-ES", { style: "currency", currency: "EUR" }), ""]}
+                formatter={(value) => [value.toLocaleString("es-ES", { style: "currency", currency: "ARS" }), ""]}
               />
               <Legend />
               <Line type="monotone" dataKey="value" name={t("monthlyBalance")} stroke="#3b82f6" activeDot={{ r: 8 }} />

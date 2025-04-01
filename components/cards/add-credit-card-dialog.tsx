@@ -42,7 +42,8 @@ const formSchema = z.object({
   dueDate: z.date({
     required_error: "La fecha de vencimiento es requerida",
   }),
-  currency: z.string().default("EUR"),
+  currency: z.string().default("ARS"),
+  icon: z.string().default("Landmark"),
 })
 
 interface AddCreditCardDialogProps {

@@ -9,7 +9,6 @@ import { NotificationSettings } from "@/components/settings/notification-setting
 import { SecuritySettings } from "@/components/settings/security-settings"
 import { AppearanceSettings } from "@/components/settings/appearance-settings"
 import { ExportSettings } from "@/components/settings/export-settings"
-import { CurrencySettings } from "@/components/settings/currency-settings"
 
 export default function SettingsPage() {
   const { t } = useLanguage()
@@ -28,10 +27,9 @@ export default function SettingsPage() {
           <CardDescription>{t("manageYourPreferences")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="general" onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-6">
+          <Tabs defaultValue="appearance" onValueChange={setActiveTab}>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5">
               <TabsTrigger value="general">{t("general")}</TabsTrigger>
-              <TabsTrigger value="monedas">{t("currencies")}</TabsTrigger>
               <TabsTrigger value="appearance">{t("appearance")}</TabsTrigger>
               <TabsTrigger value="notifications">{t("notifications")}</TabsTrigger>
               <TabsTrigger value="security">{t("security")}</TabsTrigger>
@@ -39,9 +37,6 @@ export default function SettingsPage() {
             </TabsList>
             <TabsContent value="general" className="mt-4">
               <GeneralSettings />
-            </TabsContent>
-            <TabsContent value="monedas" className="mt-4">
-              <CurrencySettings />
             </TabsContent>
             <TabsContent value="appearance" className="mt-4">
               <AppearanceSettings />

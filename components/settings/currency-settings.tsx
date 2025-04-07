@@ -330,7 +330,15 @@ export function CurrencySettings() {
                       <TableCell className="font-medium">{currency.code}</TableCell>
                       <TableCell>{currency.name}</TableCell>
                       <TableCell>{currency.symbol}</TableCell>
-                      <TableCell>{currency.exchangeRate}</TableCell>
+                      <TableCell>
+                        {currency.isPrimary ? (
+                          "1.0 (Base)"
+                        ) : (
+                          <span title={`1 ${primaryCurrency} = ${currency.exchangeRate} ${currency.code}`}>
+                            {currency.exchangeRate} {currency.code}/{primaryCurrency}
+                          </span>
+                        )}
+                      </TableCell>
                       <TableCell>
                         <Switch
                           checked={currency.isPrimary}
@@ -439,7 +447,9 @@ export function CurrencySettings() {
                             disabled={form.getValues().isPrimary}
                           />
                         </FormControl>
-                        <FormDescription>{t("exchangeRateDescription", { currency: primaryCurrency })}</FormDescription>
+                        <FormDescription>
+                          {t("exchangeRateDescription", { currency: form.getValues().isPrimary ? t("itself") : primaryCurrency })}
+                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}

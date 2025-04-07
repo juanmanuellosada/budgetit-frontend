@@ -19,7 +19,7 @@ import { LanguageSelector } from "@/components/language-selector"
 import {
   Menu, X, User, LogOut, Moon, Sun,
   LayoutDashboard, Wallet, CreditCard, ArrowLeftRight,
-  PieChart, Settings, HelpCircle
+  PieChart, Settings, HelpCircle, Coins
 } from "lucide-react"
 
 export function Navbar() {
@@ -41,6 +41,7 @@ export function Navbar() {
     { path: "/tarjetas", label: t("cards"), icon: CreditCard },
     { path: "/transacciones", label: t("transactions"), icon: ArrowLeftRight },
     { path: "/presupuestos", label: t("budgets"), icon: PieChart },
+    { path: "/monedas", label: t("currencies"), icon: Coins },
     { path: "/configuracion", label: t("settings"), icon: Settings }
   ]
 

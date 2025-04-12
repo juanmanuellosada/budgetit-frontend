@@ -10,11 +10,13 @@ import { FloatingActionButton } from "@/components/floating-action-button"
 import { QuickTransactionEntry } from "@/components/dashboard/quick-transaction-entry"
 import { useLanguage } from "@/contexts/language-context"
 import { SimpleDashboardGrid } from "@/components/dashboard/simple-dashboard-grid"
+import { FinancialInsights } from "@/components/dashboard/financial-insights"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, Filter } from "lucide-react"
+import { Search, Filter, Download } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { DashboardFilterPanel } from "@/components/dashboard/dashboard-filter-panel"
+import { storageService } from "@/services/storage-service"
 
 // Mock transactions data for demonstration
 const transactions = [
@@ -57,6 +59,7 @@ export default function Home() {
     t("operationsSummary"),
     t("recentTransactions"),
     t("budgets"),
+    t("financialInsights") // Nuevo título para los insights financieros
   ]
 
   // Componentes para el dashboard
@@ -82,6 +85,7 @@ export default function Home() {
     <OperationsSummary key="operations" />,
     <RecentTransactions key="transactions" />,
     <BudgetOverview key="budgets" />,
+    <FinancialInsights key="insights" /> // Nuevo componente de insights financieros
   ]
 
 // Define interfaces
@@ -109,6 +113,34 @@ const handleFilterChange = useCallback((newFilters: FilterState) => {
     console.log("Filters changed:", newFilters)
 }, [])
 
+// Función para exportar datos
+const handleExportData = () => {
+  try {
+    const jsonData = storageService.exportAllData();
+    const blob = new Blob([jsonData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement("a");
+    const date = new Date().toISOString().split('T')[0];
+    a.href = url;
+    a.download = `budgetit_export_${date}.json`;
+    document.body.appendChild(a);
+    a.click();
+    
+    // Limpiar
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+    
+    // También crear una copia de seguridad automática
+    storageService.createBackup();
+    
+  } catch (error) {
+    console.error("Error exporting data:", error);
+  }
+};
+
 // Si no estamos en el cliente, mostrar un estado de carga
 if (!isClient) {
     return (
@@ -126,8 +158,9 @@ if (!isClient) {
           <h1 className="text-2xl font-bold tracking-tight">{t("dashboard")}</h1>
           <p className="text-muted-foreground">{t("welcome")}</p>
         </div>
-        <Button variant="outline" onClick={() => console.log("Exportar")}>
-          {t("export")}
+        <Button variant="outline" onClick={handleExportData}>
+          <Download className="h-4 w-4 mr-2" />
+          {t("exportData")}
         </Button>
       </div>
 

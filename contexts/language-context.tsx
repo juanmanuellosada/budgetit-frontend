@@ -7,7 +7,7 @@ type Language = "es" | "en"
 type LanguageContextType = {
   language: Language
   setLanguage: (language: Language) => void
-  t: (key: string) => string
+  t: (key: string, params?: Record<string, any>) => string
 }
 
 const translations = {
@@ -295,6 +295,73 @@ const translations = {
     applyFilters: "Aplicar Filtros",
     desde: "Desde",
     hasta: "Hasta",
+    locale: "es-ES",
+    
+    // Nueva sección: Financial Insights and Analytics
+    financialInsights: "Insights Financieros",
+    smartAnalysisOfYourSpending: "Análisis inteligente de tus patrones de gasto",
+    analyzingYourFinancialData: "Analizando tus datos financieros...",
+    insufficientData: "Datos insuficientes",
+    needMoreTransactionsForInsights: "Se necesitan más transacciones para generar insights financieros detallados.",
+    refreshAnalysis: "Actualizar análisis",
+    spendingPatterns: "Patrones de gasto",
+    savingOpportunities: "Oportunidades de ahorro",
+    budgetAlerts: "Alertas de presupuesto",
+    categorySpendingTrends: "Tendencias de gasto por categoría",
+    noPatternDataAvailable: "No hay datos de patrones disponibles aún",
+    topSpendingCategories: "Principales categorías de gasto",
+    averageMonthly: "Promedio mensual",
+    significantChanges: "Cambios significativos",
+    spendingIncreaseDetected: "Se detectó un aumento significativo en esta categoría respecto al mes anterior.",
+    spendingDecreaseDetected: "Se detectó una disminución significativa en esta categoría respecto al mes anterior.",
+    noSignificantChanges: "No se detectaron cambios significativos en tus patrones de gasto",
+    noSavingSuggestionsAvailable: "No hay sugerencias de ahorro disponibles",
+    savingOpportunityIn: "Oportunidad de ahorro en",
+    currentMonthlySpending: "Gasto mensual actual",
+    easy: "Fácil",
+    moderate: "Moderado", 
+    challenging: "Desafiante",
+    suggestedMonthlySaving: "Ahorro mensual sugerido",
+    potentialAnnualSaving: "Ahorro anual potencial",
+    savingSuggestionText: "Reduciendo tu gasto en {category} un {percentage}%, podrías ahorrar esta cantidad mensualmente.",
+    totalPotentialSaving: "Ahorro potencial total",
+    month: "mes",
+    year: "año",
+    anomaliesAndAlerts: "Anomalías y alertas",
+    unusualTransactions: "Transacciones inusuales",
+    noAnomaliesDetected: "No se detectaron transacciones anómalas",
+    viewMore: "Ver más",
+    budgetRiskAlerts: "Alertas de riesgo presupuestario",
+    allBudgetsOnTrack: "Todos los presupuestos van según lo planeado",
+    used: "usado",
+    budgetExceeded: "Presupuesto excedido",
+    projectedToExceedBudget: "Según el ritmo actual, excederás el presupuesto",
+    lastUpdated: "Última actualización",
+    day: "día",
+    week: "semana",
+    exportToCSV: "Exportar a CSV",
+    backupData: "Respaldar datos",
+    backupCreated: "Respaldo creado",
+    yourDataHasBeenBackedUp: "Tus datos han sido respaldados correctamente",
+    importData: "Importar datos",
+    chooseFile: "Elegir archivo",
+    importSuccessful: "Importación exitosa",
+    yourDataHasBeenImported: "Tus datos han sido importados correctamente",
+    overview: "Resumen",
+    insights: "Insights",
+    syncData: "Sincronizar datos",
+    offlineMode: "Modo sin conexión",
+    offlineModeActive: "Modo sin conexión activo",
+    projectedSpending: "Gasto proyectado",
+    smartCategorizationEnabled: "Categorización inteligente activada",
+    yourTransactionsWillBeAutomaticallyCategorized: "Tus transacciones serán categorizadas automáticamente",
+    patternBasedPredictions: "Predicciones basadas en patrones",
+    weAnalyzeYourSpendingPatternsToGeneratePredictions: "Analizamos tus patrones de gasto para generar predicciones",
+    moneySavingTips: "Consejos para ahorrar dinero",
+    basedOnYourSpendingHabits: "Basados en tus hábitos de gasto",
+    predictionAccuracy: "Precisión de predicciones",
+    download: "Descargar",
+    spendingRiskDetection: "Detección de riesgos de gasto",
   },
   en: {
     dashboard: "Dashboard",
@@ -580,6 +647,73 @@ const translations = {
     applyFilters: "Apply Filters",
     desde: "From",
     hasta: "To",
+    locale: "en-US",
+    
+    // New section: Financial Insights and Analytics
+    financialInsights: "Financial Insights",
+    smartAnalysisOfYourSpending: "Smart analysis of your spending patterns",
+    analyzingYourFinancialData: "Analyzing your financial data...",
+    insufficientData: "Insufficient data",
+    needMoreTransactionsForInsights: "More transactions are needed to generate detailed financial insights.",
+    refreshAnalysis: "Refresh analysis",
+    spendingPatterns: "Spending patterns",
+    savingOpportunities: "Saving opportunities",
+    budgetAlerts: "Budget alerts",
+    categorySpendingTrends: "Category spending trends",
+    noPatternDataAvailable: "No pattern data available yet",
+    topSpendingCategories: "Top spending categories",
+    averageMonthly: "Monthly average",
+    significantChanges: "Significant changes",
+    spendingIncreaseDetected: "A significant increase was detected in this category compared to the previous month.",
+    spendingDecreaseDetected: "A significant decrease was detected in this category compared to the previous month.",
+    noSignificantChanges: "No significant changes detected in your spending patterns",
+    noSavingSuggestionsAvailable: "No saving suggestions available",
+    savingOpportunityIn: "Saving opportunity in",
+    currentMonthlySpending: "Current monthly spending",
+    easy: "Easy",
+    moderate: "Moderate",
+    challenging: "Challenging",
+    suggestedMonthlySaving: "Suggested monthly saving",
+    potentialAnnualSaving: "Potential annual saving",
+    savingSuggestionText: "By reducing your spending in {category} by {percentage}%, you could save this amount monthly.",
+    totalPotentialSaving: "Total potential saving",
+    month: "month",
+    year: "year",
+    anomaliesAndAlerts: "Anomalies and alerts",
+    unusualTransactions: "Unusual transactions",
+    noAnomaliesDetected: "No anomalous transactions detected",
+    viewMore: "View more",
+    budgetRiskAlerts: "Budget risk alerts",
+    allBudgetsOnTrack: "All budgets are on track",
+    used: "used",
+    budgetExceeded: "Budget exceeded",
+    projectedToExceedBudget: "At the current rate, you will exceed the budget",
+    lastUpdated: "Last updated",
+    day: "day",
+    week: "week",
+    exportToCSV: "Export to CSV",
+    backupData: "Backup data",
+    backupCreated: "Backup created",
+    yourDataHasBeenBackedUp: "Your data has been backed up successfully",
+    importData: "Import data",
+    chooseFile: "Choose file",
+    importSuccessful: "Import successful",
+    yourDataHasBeenImported: "Your data has been imported successfully",
+    overview: "Overview",
+    insights: "Insights",
+    syncData: "Sync data",
+    offlineMode: "Offline mode",
+    offlineModeActive: "Offline mode active",
+    projectedSpending: "Projected spending",
+    smartCategorizationEnabled: "Smart categorization enabled",
+    yourTransactionsWillBeAutomaticallyCategorized: "Your transactions will be automatically categorized",
+    patternBasedPredictions: "Pattern-based predictions",
+    weAnalyzeYourSpendingPatternsToGeneratePredictions: "We analyze your spending patterns to generate predictions",
+    moneySavingTips: "Money saving tips",
+    basedOnYourSpendingHabits: "Based on your spending habits",
+    predictionAccuracy: "Prediction accuracy",
+    download: "Download",
+    spendingRiskDetection: "Spending risk detection",
   },
 }
 
@@ -601,8 +735,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("language", newLanguage)
   }
 
-  const t = (key: string): string => {
-    return translations[language][key as keyof (typeof translations)[typeof language]] || key
+  const t = (key: string, params?: Record<string, any>): string => {
+    const translation = translations[language][key as keyof (typeof translations)[typeof language]] || key
+    
+    if (params && typeof translation === 'string') {
+      return Object.entries(params).reduce((acc, [key, value]) => {
+        return acc.replace(new RegExp(`\\{${key}\\}`, 'g'), String(value))
+      }, translation)
+    }
+    
+    return translation
   }
 
   return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>
